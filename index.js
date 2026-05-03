@@ -9,14 +9,18 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.i5ldpfc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-
-const client = new MongoClient(uri, {
-  serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
-});
+ //const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.i5ldpfc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8bdl7ve.mongodb.net/AI_Inventory_DB?retryWrites=true&w=majority`;
+//const uri = "mongodb+srv://USER:PASS@cluster0.i5ldpfc.mongodb.net/AI_Inventory_DB?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, {
+//   serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
+// });
+const client = new MongoClient(uri);
 
 async function run() {
   try {
+    await client.connect();
+    console.log("MongoDB connected");
     const db = client.db("AI_Inventory_DB");
     const modelsCollection = db.collection("models");
 
